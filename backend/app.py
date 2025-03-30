@@ -7,7 +7,7 @@ import textwrap
 app = Flask(__name__)
 
 def setup_gemini_api():
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = process.env.NEXT_PUBLIC_API_KEY
     if not api_key:
         raise ValueError("Please set the GEMINI_API_KEY environment variable.")
     genai.configure(api_key=api_key)
@@ -58,8 +58,8 @@ def itinerary_generator():
         }
         model = setup_gemini_api()
         itinerary = generate_itinerary_with_gemini(user_inputs, model)
-        return render_template('index.html', itinerary=Markup(itinerary.replace('\n', '<br>')))
-    return render_template('index.html', itinerary=None)
+        return render_template('./frontend/travelui/src/app/dashboard/traveldetails/page.tsx', itinerary=Markup(itinerary.replace('\n', '<br>')))
+    return render_template('./frontend/travelui/src/app/dashboard/traveldetails/page.tsx', itinerary=None)
 
 if __name__ == '__main__':
     # Remove debug=True for production
